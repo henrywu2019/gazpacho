@@ -1,5 +1,7 @@
 github.com/vyskocilm/gazpacho v0.0.0-20181105124653-0d6870bcd0e8 h1:bjYb1Cmr4l7NK65CyUHr/+3TWK44yz58z6ovq1pylZE=
 github.com/vyskocilm/gazpacho v0.0.0-20181105124653-0d6870bcd0e8/go.mod h1:cLece/T4woa17voafOo1GYdez9+twjCai5C2piKd0+g=
+github.com/vyskocilm/gazpacho/g/cfg v0.0.0-20181109075706-a4ae50527451 h1:IEUBGhpYzpz/lzR3Z5dwyWtYGHGJwKTWbc3YDQTE3Pw=
+github.com/vyskocilm/gazpacho/g/cfg v0.0.0-20181109075706-a4ae50527451/go.mod h1:G2vrKPUpI+QyEmQcJ+XovOopKeNKEdiJyB9+p05o2R0=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v2 v2.2.1 h1:mUhvW9EsL+naU5Q3cakzfE91YhliOondGd6ZrsDBHQE=
 gopkg.in/yaml.v2 v2.2.1/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
