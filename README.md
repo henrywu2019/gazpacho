@@ -24,3 +24,25 @@ Example golang 1.11 compatible monorepo. Microservices are located in root direc
 
 5 directories, 12 files
 ```
+.
+├── g
+│   ├── cfg
+│   │   ├── cfg.go
+│   │   ├── cfg_test.go
+│   │   ├── go.mod
+│   │   └── testdata
+│   ├── go.mod
+│   └── lib.go
+├── go.mod
+├── go.sum
+├── out
+├── project1-serviceA
+│   ├── go.mod
+│   ├── go.sum
+│   ├── main.go
+│   └── project1-serviceA
+├── project2
+│   └── hello.php
+└── README.md
+
+5 directories, 14 files
