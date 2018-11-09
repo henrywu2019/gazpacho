@@ -1,4 +1,4 @@
-module github.com/vyskocilm/gazpacho/cli
+module github.com/vyskocilm/gazpacho/project1-serviceA
 
 require (
 	github.com/vyskocilm/gazpacho v0.0.0-20181105124653-0d6870bcd0e8
