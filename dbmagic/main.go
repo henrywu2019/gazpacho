@@ -16,8 +16,7 @@ type DummyDriver struct {
 }
 
 type DummyConn struct {
-    name string
-    file *os.File
+    name string         // file name
 }
 
 // implements sql.Driver interface
@@ -27,7 +26,8 @@ func (d *DummyDriver) Open(name string) (driver.Conn, error) {
     if err != nil {
         return nil, err
     }
-    return &DummyConn{name, file}, nil
+    defer file.Close()
+    return &DummyConn{name: name}, nil
 }
 
 // implements sql.Conn interface
@@ -38,7 +38,7 @@ func (c *DummyConn) Prepare(query string) (driver.Stmt, error) {
 
 // Close -
 func (c *DummyConn) Close() error {
-    return c.file.Close()
+    return nil
 }
 
 // Begin - 
@@ -61,18 +61,23 @@ func (c *DummyConn) Query(query string, args []driver.Value) (driver.Rows, error
         return nil, fmt.Errorf("Only `SELECT * FROM csv` string is implemented!")
     }
 
-    r := csv.NewReader(c.file)
+    file, err := os.Open(c.name)
+    if err != nil {
+        return nil, err
+    }
+
+    r := csv.NewReader(file)
     r.FieldsPerRecord = 0       // enforce the same number of columns
     columns, err := r.Read()  // assume first line gives you column names
     if err != nil {
         return nil, err
     }
-    res := &results{r, columns}
+    res := &results{file, r, columns}
     return res, nil
-
 }
 
 type results struct {
+    file *os.File
     reader *csv.Reader
     columns []string
 }
@@ -83,7 +88,7 @@ func (r *results) Columns() []string {
 }
 
 func (r *results) Close() error {
-    return nil
+    return r.file.Close()
 }
 
 func (r *results) Next(dest []driver.Value) error {
@@ -118,17 +123,22 @@ Ken,Thompson,ken
         panic(err)
     }
 
-    rows, err := db.Query("SELECT * FROM csv")
-    if err != nil {
-        panic(err)
-    }
-
-    for rows.Next() {
-        var f1, f2, f3 string
-        err := rows.Scan(&f1, &f2, &f3)
+    rows := make([]*sql.Rows, 2)
+    for i := 0; i != 2; i++ {
+        rows[i], err = db.Query("SELECT * FROM csv")
         if err != nil {
             panic(err)
         }
-        fmt.Printf("first_name=%s, last_name=%s, username=%s\n", f1, f2, f3)
+    }
+
+    for _, r := range rows {
+        for r.Next() {
+            var f1, f2, f3 string
+            err := r.Scan(&f1, &f2, &f3)
+            if err != nil {
+                panic(err)
+            }
+            fmt.Printf("first_name=%s, last_name=%s, username=%s\n", f1, f2, f3)
+        }
     }
 }
